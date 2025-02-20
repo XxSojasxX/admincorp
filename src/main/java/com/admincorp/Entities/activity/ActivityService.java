@@ -24,9 +24,12 @@ public class ActivityService {
 
     // Insert
     public Activity activitySave(Activity entity) {
-        // Verificar que el asignado no sea nulo
+        // Verificar que el asignado y el líder no sean nulos
         if (entity.getAsignado() == null || entity.getAsignado().getId() == null) {
             throw new IllegalArgumentException("Asignado no puede ser nulo");
+        }
+        if (entity.getLeader() == null || entity.getLeader().getId() == null) {
+            throw new IllegalArgumentException("Líder no puede ser nulo");
         }
 
         // Obtener el usuario autenticado y asignarlo como createdBy
@@ -70,6 +73,7 @@ public class ActivityService {
             existingActivity.setDescripcion(updatedActivity.getDescripcion());
             existingActivity.setEstado(updatedActivity.getEstado());
             existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
+            existingActivity.setLeader(updatedActivity.getLeader());
 
             return activityRepository.save(existingActivity);
         } else {

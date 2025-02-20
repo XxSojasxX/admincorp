@@ -26,6 +26,11 @@ public class Activity {
     @JsonBackReference("user-activity-asignado")
     private Users asignado;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "leader_id", nullable = false)
+    @JsonBackReference("user-activity-leader")
+    private Users leader;
+
     @Column(nullable = false)
     private String descripcion;
 
@@ -54,6 +59,15 @@ public class Activity {
 
     public void setAsignado(Users asignado) {
         this.asignado = asignado;
+    }
+
+    // Métodos getter y setter para leader
+    public Users getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Users leader) {
+        this.leader = leader;
     }
 
     // Métodos getter y setter para createdBy

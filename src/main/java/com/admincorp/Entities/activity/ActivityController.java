@@ -58,6 +58,7 @@ public class ActivityController {
             existingActivity.setDescripcion(updatedActivity.getDescripcion());
             existingActivity.setEstado(updatedActivity.getEstado());
             existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
+            existingActivity.setLeader(updatedActivity.getLeader());
             // Actualizar otros campos según sea necesario
 
             return ResponseEntity.ok(activityService.activitySave(existingActivity));
