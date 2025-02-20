@@ -20,7 +20,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @CrossOrigin({"*"})
-@RequestMapping("trackit/users")
+@RequestMapping("admincorp/users")
 @Tag(name = "Controlador para Usuarios")
 public class UserController {
     @Autowired
