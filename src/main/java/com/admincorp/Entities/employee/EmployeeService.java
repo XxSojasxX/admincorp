@@ -24,8 +24,15 @@ public class EmployeeService {
 
     // Insert
     public Employee employeeSave(Employee entity) {
+        // Verificar que el usuario no sea nulo
+        if (entity.getUsuario() == null || entity.getUsuario().getId() == null) {
+            throw new IllegalArgumentException("Usuario no puede ser nulo");
+        }
+
+        // Obtener el usuario autenticado y asignarlo como createdBy
         Users currentUser = getCurrentUser();
         entity.setCreatedBy(currentUser);
+
         return employeeRepository.save(entity);
     }
 

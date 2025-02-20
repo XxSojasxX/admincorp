@@ -1,4 +1,4 @@
-package com.admincorp.Entities.employee;
+package com.admincorp.Entities.activity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,23 +12,28 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Employee {
+public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long cedula;
+    private String nombreActividad;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_id", nullable = false)
+    @JsonBackReference("user-activity-asignado")
+    private Users asignado;
 
     @Column(nullable = false)
-    private String nombreEmpleado;
+    private String descripcion;
 
     @Column(nullable = false)
-    private String apellidoEmpleado;
+    private String estado;
 
     @Column(nullable = false)
-    private String correoEmpleado;
+    private LocalDateTime tiempoEntrega;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -38,22 +43,17 @@ public class Employee {
     private LocalDateTime deleteAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-usuario")
-    private Users usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-createdBy")
+    @JsonBackReference("user-activity-createdBy")
     private Users createdBy;
 
-    // Métodos getter y setter para usuario
-    public Users getUsuario() {
-        return usuario;
+    // Métodos getter y setter para asignado
+    public Users getAsignado() {
+        return asignado;
     }
 
-    public void setUsuario(Users usuario) {
-        this.usuario = usuario;
+    public void setAsignado(Users asignado) {
+        this.asignado = asignado;
     }
 
     // Métodos getter y setter para createdBy

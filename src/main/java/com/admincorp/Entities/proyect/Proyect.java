@@ -1,4 +1,4 @@
-package com.admincorp.Entities.employee;
+package com.admincorp.Entities.proyect;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,23 +12,25 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Employee {
+public class Proyect {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long cedula;
+    private String titulo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "leader_id", nullable = false)
+    @JsonBackReference("user-proyecto-lider")
+    private Users leader;
 
     @Column(nullable = false)
-    private String nombreEmpleado;
+    private String descripcion;
 
     @Column(nullable = false)
-    private String apellidoEmpleado;
-
-    @Column(nullable = false)
-    private String correoEmpleado;
+    private String estado;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -38,22 +40,17 @@ public class Employee {
     private LocalDateTime deleteAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-usuario")
-    private Users usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-createdBy")
+    @JsonBackReference("user-proyecto-createdBy")
     private Users createdBy;
 
-    // Métodos getter y setter para usuario
-    public Users getUsuario() {
-        return usuario;
+    // Métodos getter y setter para leader
+    public Users getLeader() {
+        return leader;
     }
 
-    public void setUsuario(Users usuario) {
-        this.usuario = usuario;
+    public void setLeader(Users leader) {
+        this.leader = leader;
     }
 
     // Métodos getter y setter para createdBy

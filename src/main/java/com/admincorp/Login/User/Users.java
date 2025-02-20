@@ -50,6 +50,7 @@ public class Users implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20) // Asegúrate de que la longitud sea suficiente
     private Role role;
 
     @JsonIgnore
