@@ -5,9 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.admincorp.Login.User.Users;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -37,17 +34,5 @@ public class Employee {
     @UpdateTimestamp
     private LocalDateTime deleteAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-usuario")
-    private Users usuario;
-
-    // Métodos getter y setter para usuario
-    public Users getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Users usuario) {
-        this.usuario = usuario;
-    }
+    // Eliminar la relación con Users
 }

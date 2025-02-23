@@ -8,8 +8,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.admincorp.Login.User.Users;
-
 import jakarta.persistence.EntityNotFoundException;
 
 @SuppressWarnings("unused")
@@ -21,11 +19,6 @@ public class EmployeeService {
 
     // Insert
     public Employee employeeSave(Employee entity) {
-        // Verificar que el usuario no sea nulo y exista en la base de datos
-        if (entity.getUsuario() == null || entity.getUsuario().getId() == null) {
-            throw new IllegalArgumentException("Usuario no puede ser nulo");
-        }
-
         return employeeRepository.save(entity);
     }
 
