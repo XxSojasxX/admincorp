@@ -54,6 +54,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> employeeUpdate(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         Employee existingEmployee = employeeService.employeeFindById(id);
         if (existingEmployee != null) {
+            existingEmployee.setCedula(updatedEmployee.getCedula());
             existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
             existingEmployee.setApellidoEmpleado(updatedEmployee.getApellidoEmpleado());
             existingEmployee.setCorreoEmpleado(updatedEmployee.getCorreoEmpleado());
@@ -61,7 +62,7 @@ public class EmployeeController {
 
             return ResponseEntity.ok(employeeService.employeeSave(existingEmployee));
         } else {
-            throw new EntityNotFoundException("Employee with id " + id + " not found");
+            throw new EntityNotFoundException("Empleado con id " + id + " no encontrado");
         }
     }
 

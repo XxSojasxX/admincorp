@@ -51,15 +51,15 @@ public class ProyectController {
     // Update
     @PutMapping("/update/{id}/")
     @Operation(summary = "Actualiza un Proyecto")
-    public ResponseEntity<Proyect> proyectoUpdate(@PathVariable Long id, @RequestBody Proyect updatedProyecto) {
-        Proyect existingProyecto = proyectoService.proyectoFindById(id);
-        if (existingProyecto != null) {
-            existingProyecto.setTitulo(updatedProyecto.getTitulo());
-            existingProyecto.setDescripcion(updatedProyecto.getDescripcion());
-            existingProyecto.setEstado(updatedProyecto.getEstado());
+    public ResponseEntity<Proyect> proyectoUpdate(@PathVariable Long id, @RequestBody Proyect updatedProyect) {
+        Proyect existingProyect = proyectoService.proyectoFindById(id);
+        if (existingProyect != null) {
+            existingProyect.setTitulo(updatedProyect.getTitulo());
+            existingProyect.setDescripcion(updatedProyect.getDescripcion());
+            existingProyect.setEstado(updatedProyect.getEstado());
             // Actualizar otros campos según sea necesario
 
-            return ResponseEntity.ok(proyectoService.proyectoSave(existingProyecto));
+            return ResponseEntity.ok(proyectoService.proyectoSave(existingProyect));
         } else {
             throw new EntityNotFoundException("Proyecto con id " + id + " no encontrado");
         }

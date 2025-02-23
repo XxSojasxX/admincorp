@@ -42,11 +42,6 @@ public class Employee {
     @JsonBackReference("user-employee-usuario")
     private Users usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false, updatable = false)
-    @JsonBackReference("user-employee-createdBy")
-    private Users createdBy;
-
     // Métodos getter y setter para usuario
     public Users getUsuario() {
         return usuario;
@@ -54,14 +49,5 @@ public class Employee {
 
     public void setUsuario(Users usuario) {
         this.usuario = usuario;
-    }
-
-    // Métodos getter y setter para createdBy
-    public Users getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Users createdBy) {
-        this.createdBy = createdBy;
     }
 }

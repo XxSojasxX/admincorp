@@ -47,11 +47,6 @@ public class Activity {
     @UpdateTimestamp
     private LocalDateTime deleteAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false, updatable = false)
-    @JsonBackReference("user-activity-createdBy")
-    private Users createdBy;
-
     // Métodos getter y setter para asignado
     public Users getAsignado() {
         return asignado;
@@ -68,14 +63,5 @@ public class Activity {
 
     public void setLeader(Users leader) {
         this.leader = leader;
-    }
-
-    // Métodos getter y setter para createdBy
-    public Users getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Users createdBy) {
-        this.createdBy = createdBy;
     }
 }

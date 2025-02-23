@@ -39,11 +39,6 @@ public class Proyect {
     @UpdateTimestamp
     private LocalDateTime deleteAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false, updatable = false)
-    @JsonBackReference("user-proyecto-createdBy")
-    private Users createdBy;
-
     // Métodos getter y setter para leader
     public Users getLeader() {
         return leader;
@@ -51,14 +46,5 @@ public class Proyect {
 
     public void setLeader(Users leader) {
         this.leader = leader;
-    }
-
-    // Métodos getter y setter para createdBy
-    public Users getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Users createdBy) {
-        this.createdBy = createdBy;
     }
 }
