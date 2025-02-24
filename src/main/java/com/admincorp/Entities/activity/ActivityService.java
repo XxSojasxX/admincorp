@@ -36,12 +36,16 @@ public class ActivityService {
         Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Actividad no encontrada"));
 
+        if (activity.isDeleted()) {
+            throw new EntityNotFoundException("Actividad no encontrada");
+        }
+
         return activity;
     }
 
     // Select All
     public List<Activity> activityFindAll() {
-        Iterable<Activity> iterable = activityRepository.findAll();
+        Iterable<Activity> iterable = activityRepository.findAllByDeletedFalse();
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -51,12 +55,24 @@ public class ActivityService {
         Activity existingActivity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Actividad no encontrada"));
 
-        existingActivity.setNombreActividad(updatedActivity.getNombreActividad());
-        existingActivity.setDescripcion(updatedActivity.getDescripcion());
-        existingActivity.setEstado(updatedActivity.getEstado());
-        existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
-        existingActivity.setProyecto(updatedActivity.getProyecto());
-        existingActivity.setStaff(updatedActivity.getStaff());
+        if (updatedActivity.getNombreActividad() != null) {
+            existingActivity.setNombreActividad(updatedActivity.getNombreActividad());
+        }
+        if (updatedActivity.getDescripcion() != null) {
+            existingActivity.setDescripcion(updatedActivity.getDescripcion());
+        }
+        if (updatedActivity.getEstado() != null) {
+            existingActivity.setEstado(updatedActivity.getEstado());
+        }
+        if (updatedActivity.getTiempoEntrega() != null) {
+            existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
+        }
+        if (updatedActivity.getProyecto() != null) {
+            existingActivity.setProyecto(updatedActivity.getProyecto());
+        }
+        if (updatedActivity.getStaff() != null) {
+            existingActivity.setStaff(updatedActivity.getStaff());
+        }
 
         return activityRepository.save(existingActivity);
     }
@@ -66,6 +82,7 @@ public class ActivityService {
         Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Actividad no encontrada"));
 
+        activity.setDeleted(true);
         activity.setDeleteAt(LocalDateTime.now());
         activityRepository.save(activity);
     }

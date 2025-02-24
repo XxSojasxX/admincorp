@@ -30,36 +30,48 @@ public class ActivityController {
     // Create
     @PostMapping
     @Operation(summary = "Crea una Actividad")
-    public Activity activitySave(@RequestBody Activity entity) {
+    public Activity save(@RequestBody Activity entity) {
         return activityService.activitySave(entity);
     }
 
     // Select
-    @GetMapping("/{id}/")
+    @GetMapping("/{id}")
     @Operation(summary = "Busca una Actividad por id")
-    public Activity activityFindById(@PathVariable Long id) {
+    public Activity findById(@PathVariable("id") Long id) {
         return activityService.activityFindById(id);
     }
 
     // Select All
     @GetMapping
     @Operation(summary = "Busca todas las actividades")
-    public List<Activity> activityFindAll() {
+    public List<Activity> findAll() {
         return activityService.activityFindAll();
     }
 
     // Update
-    @PutMapping("/update/{id}/")
+    @PutMapping("/{id}")
     @Operation(summary = "Actualiza una Actividad")
-    public ResponseEntity<Activity> activityUpdate(@PathVariable Long id, @RequestBody Activity updatedActivity) {
+    public ResponseEntity<Activity> update(@PathVariable("id") Long id, @RequestBody Activity updatedActivity) {
         Activity existingActivity = activityService.activityFindById(id);
         if (existingActivity != null) {
-            existingActivity.setNombreActividad(updatedActivity.getNombreActividad());
-            existingActivity.setDescripcion(updatedActivity.getDescripcion());
-            existingActivity.setEstado(updatedActivity.getEstado());
-            existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
-            existingActivity.setProyecto(updatedActivity.getProyecto());
-            existingActivity.setStaff(updatedActivity.getStaff());
+            if (updatedActivity.getNombreActividad() != null) {
+                existingActivity.setNombreActividad(updatedActivity.getNombreActividad());
+            }
+            if (updatedActivity.getDescripcion() != null) {
+                existingActivity.setDescripcion(updatedActivity.getDescripcion());
+            }
+            if (updatedActivity.getEstado() != null) {
+                existingActivity.setEstado(updatedActivity.getEstado());
+            }
+            if (updatedActivity.getTiempoEntrega() != null) {
+                existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
+            }
+            if (updatedActivity.getProyecto() != null) {
+                existingActivity.setProyecto(updatedActivity.getProyecto());
+            }
+            if (updatedActivity.getStaff() != null) {
+                existingActivity.setStaff(updatedActivity.getStaff());
+            }
             // Actualizar otros campos según sea necesario
 
             return ResponseEntity.ok(activityService.activitySave(existingActivity));
@@ -68,10 +80,10 @@ public class ActivityController {
         }
     }
 
-    // Delete (Logical)
-    @DeleteMapping("/{id}/")
+    // Delete
+    @DeleteMapping("/{id}")
     @Operation(summary = "Elimina una Actividad por id")
-    public void activityDelete(@PathVariable Long id) {
+    public void delete(@PathVariable("id") Long id) {
         activityService.activityDeleteById(id);
     }
 }

@@ -48,6 +48,9 @@ public class Activity {
 
     private LocalDateTime deleteAt;
 
+    @Column(nullable = false)
+    private boolean deleted = false;
+
     // Métodos getter y setter para proyecto
     public Proyect getProyecto() {
         return proyecto;
@@ -73,5 +76,13 @@ public class Activity {
 
     public void setDeleteAt(LocalDateTime deleteAt) {
         this.deleteAt = deleteAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

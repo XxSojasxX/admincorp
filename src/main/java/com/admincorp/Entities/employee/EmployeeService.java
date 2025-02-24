@@ -1,7 +1,7 @@
 package com.admincorp.Entities.employee;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,14 +25,18 @@ public class EmployeeService {
     // Select
     public Employee employeeFindById(Long id) {
         Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
+
+        if (employee.isDeleted()) {
+            throw new EntityNotFoundException("Empleado no encontrado");
+        }
 
         return employee;
     }
 
     // Select All
     public List<Employee> employeeFindAll() {
-        Iterable<Employee> iterable = employeeRepository.findAll();
+        Iterable<Employee> iterable = employeeRepository.findAllByDeletedFalse();
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -40,7 +44,7 @@ public class EmployeeService {
     // Update
     public Employee employeeUpdate(Long id, Employee updatedEmployee) {
         Employee existingEmployee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
 
         existingEmployee.setCedula(updatedEmployee.getCedula());
         existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
@@ -50,11 +54,13 @@ public class EmployeeService {
         return employeeRepository.save(existingEmployee);
     }
 
-    // Delete
+    // Delete (Logical)
     public void employeeDeleteById(Long id) {
         Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
 
-        employeeRepository.deleteById(id);
+        employee.setDeleted(true);
+        employee.setDeleteAt(LocalDateTime.now());
+        employeeRepository.save(employee);
     }
 }
