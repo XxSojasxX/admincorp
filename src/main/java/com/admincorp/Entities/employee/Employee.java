@@ -34,5 +34,5 @@ public class Employee {
     @UpdateTimestamp
     private LocalDateTime deleteAt;
 
-    // Eliminar la relación con Users
+    // Relación con Users eliminada
 }

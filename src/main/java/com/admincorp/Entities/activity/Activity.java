@@ -3,15 +3,19 @@ package com.admincorp.Entities.activity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
+import com.admincorp.Entities.proyect.Proyect;
 import com.admincorp.Login.User.Users;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Activity {
 
     @Id
@@ -22,14 +26,12 @@ public class Activity {
     private String nombreActividad;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asignado_id", nullable = false)
-    @JsonBackReference("user-activity-asignado")
-    private Users asignado;
+    @JoinColumn(name = "proyecto_id", nullable = false)
+    private Proyect proyecto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "leader_id", nullable = false)
-    @JsonBackReference("user-activity-leader")
-    private Users leader;
+    @JoinColumn(name = "staff_id", nullable = false)
+    private Users staff;
 
     @Column(nullable = false)
     private String descripcion;
@@ -44,24 +46,32 @@ public class Activity {
     @Column(updatable = false)
     private LocalDateTime createAt;
 
-    @UpdateTimestamp
     private LocalDateTime deleteAt;
 
-    // Métodos getter y setter para asignado
-    public Users getAsignado() {
-        return asignado;
+    // Métodos getter y setter para proyecto
+    public Proyect getProyecto() {
+        return proyecto;
     }
 
-    public void setAsignado(Users asignado) {
-        this.asignado = asignado;
+    public void setProyecto(Proyect proyecto) {
+        this.proyecto = proyecto;
     }
 
-    // Métodos getter y setter para leader
-    public Users getLeader() {
-        return leader;
+    // Métodos getter y setter para staff
+    public Users getStaff() {
+        return staff;
     }
 
-    public void setLeader(Users leader) {
-        this.leader = leader;
+    public void setStaff(Users staff) {
+        this.staff = staff;
+    }
+
+    // Métodos getter y setter para deleteAt
+    public LocalDateTime getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(LocalDateTime deleteAt) {
+        this.deleteAt = deleteAt;
     }
 }

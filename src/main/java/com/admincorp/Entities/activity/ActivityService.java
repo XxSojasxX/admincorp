@@ -1,5 +1,6 @@
 package com.admincorp.Entities.activity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,8 +8,6 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.admincorp.Login.User.Users;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -21,12 +20,12 @@ public class ActivityService {
 
     // Insert
     public Activity activitySave(Activity entity) {
-        // Verificar que el asignado y el líder no sean nulos
-        if (entity.getAsignado() == null || entity.getAsignado().getId() == null) {
-            throw new IllegalArgumentException("Asignado no puede ser nulo");
+        // Verificar que el proyecto y el staff no sean nulos
+        if (entity.getProyecto() == null || entity.getProyecto().getId() == null) {
+            throw new IllegalArgumentException("Proyecto no puede ser nulo");
         }
-        if (entity.getLeader() == null || entity.getLeader().getId() == null) {
-            throw new IllegalArgumentException("Líder no puede ser nulo");
+        if (entity.getStaff() == null || entity.getStaff().getId() == null) {
+            throw new IllegalArgumentException("Staff no puede ser nulo");
         }
 
         return activityRepository.save(entity);
@@ -56,16 +55,18 @@ public class ActivityService {
         existingActivity.setDescripcion(updatedActivity.getDescripcion());
         existingActivity.setEstado(updatedActivity.getEstado());
         existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
-        existingActivity.setLeader(updatedActivity.getLeader());
+        existingActivity.setProyecto(updatedActivity.getProyecto());
+        existingActivity.setStaff(updatedActivity.getStaff());
 
         return activityRepository.save(existingActivity);
     }
 
-    // Delete
+    // Delete (Logical)
     public void activityDeleteById(Long id) {
         Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Actividad no encontrada"));
 
-        activityRepository.deleteById(id);
+        activity.setDeleteAt(LocalDateTime.now());
+        activityRepository.save(activity);
     }
 }

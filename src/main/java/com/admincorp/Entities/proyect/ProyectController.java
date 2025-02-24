@@ -20,7 +20,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @CrossOrigin({"*"})
-@RequestMapping("/admincorp/proyectos")
+@RequestMapping("/admincorp/proyects")
 @Tag(name = "Controlador de Proyectos")
 public class ProyectController {
     

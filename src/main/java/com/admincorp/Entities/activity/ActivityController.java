@@ -58,7 +58,8 @@ public class ActivityController {
             existingActivity.setDescripcion(updatedActivity.getDescripcion());
             existingActivity.setEstado(updatedActivity.getEstado());
             existingActivity.setTiempoEntrega(updatedActivity.getTiempoEntrega());
-            existingActivity.setLeader(updatedActivity.getLeader());
+            existingActivity.setProyecto(updatedActivity.getProyecto());
+            existingActivity.setStaff(updatedActivity.getStaff());
             // Actualizar otros campos según sea necesario
 
             return ResponseEntity.ok(activityService.activitySave(existingActivity));
@@ -67,7 +68,7 @@ public class ActivityController {
         }
     }
 
-    // Delete
+    // Delete (Logical)
     @DeleteMapping("/{id}/")
     @Operation(summary = "Elimina una Actividad por id")
     public void activityDelete(@PathVariable Long id) {

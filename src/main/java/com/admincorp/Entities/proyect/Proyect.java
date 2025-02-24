@@ -6,12 +6,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.admincorp.Login.User.Users;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Proyect {
 
     @Id
@@ -23,7 +27,6 @@ public class Proyect {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id", nullable = false)
-    @JsonBackReference("user-proyecto-lider")
     private Users leader;
 
     @Column(nullable = false)
