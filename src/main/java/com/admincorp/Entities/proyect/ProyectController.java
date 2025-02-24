@@ -35,9 +35,9 @@ public class ProyectController {
     }
 
     // Select
-    @GetMapping("/{id}/")
+    @GetMapping("/{id}")
     @Operation(summary = "Busca un Proyecto por id")
-    public Proyect proyectoFindById(@PathVariable Long id) {
+    public Proyect proyectoFindById(@PathVariable("id") Long id) {
         return proyectoService.proyectoFindById(id);
     }
 
@@ -49,14 +49,23 @@ public class ProyectController {
     }
 
     // Update
-    @PutMapping("/update/{id}/")
+    @PutMapping("/{id}")
     @Operation(summary = "Actualiza un Proyecto")
-    public ResponseEntity<Proyect> proyectoUpdate(@PathVariable Long id, @RequestBody Proyect updatedProyect) {
+    public ResponseEntity<Proyect> proyectoUpdate(@PathVariable("id") Long id, @RequestBody Proyect updatedProyect) {
         Proyect existingProyect = proyectoService.proyectoFindById(id);
         if (existingProyect != null) {
-            existingProyect.setTitulo(updatedProyect.getTitulo());
-            existingProyect.setDescripcion(updatedProyect.getDescripcion());
-            existingProyect.setEstado(updatedProyect.getEstado());
+            if (updatedProyect.getTitulo() != null) {
+                existingProyect.setTitulo(updatedProyect.getTitulo());
+            }
+            if (updatedProyect.getDescripcion() != null) {
+                existingProyect.setDescripcion(updatedProyect.getDescripcion());
+            }
+            if (updatedProyect.getEstado() != null) {
+                existingProyect.setEstado(updatedProyect.getEstado());
+            }
+            if (updatedProyect.getLeader() != null) {
+                existingProyect.setLeader(updatedProyect.getLeader());
+            }
             // Actualizar otros campos según sea necesario
 
             return ResponseEntity.ok(proyectoService.proyectoSave(existingProyect));
@@ -66,9 +75,9 @@ public class ProyectController {
     }
 
     // Delete
-    @DeleteMapping("/{id}/")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Elimina un Proyecto por id")
-    public void proyectoDelete(@PathVariable Long id) {
+    public void proyectoDelete(@PathVariable("id") Long id) {
         proyectoService.proyectoDeleteById(id);
     }
 }

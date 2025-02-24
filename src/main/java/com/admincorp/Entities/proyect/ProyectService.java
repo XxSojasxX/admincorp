@@ -12,12 +12,14 @@ import com.admincorp.Login.User.Users;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import java.time.LocalDateTime;
+
 @SuppressWarnings("unused")
 @Service
 public class ProyectService {
 
     @Autowired
-    private ProyectRepository proyectoRepository;
+    private ProyectRepository proyectRepository;
 
     // Insert
     public Proyect proyectoSave(Proyect entity) {
@@ -26,41 +28,41 @@ public class ProyectService {
             throw new IllegalArgumentException("Líder no puede ser nulo");
         }
 
-        return proyectoRepository.save(entity);
+        return proyectRepository.save(entity);
     }
 
     // Select
     public Proyect proyectoFindById(Long id) {
-        Proyect proyecto = proyectoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado"));
-
-        return proyecto;
+        Optional<Proyect> proyect = proyectRepository.findById(id);
+        if (proyect.isPresent() && !proyect.get().isDeleted()) {
+            return proyect.get();
+        } else {
+            throw new EntityNotFoundException("Proyecto con id " + id + " no encontrado");
+        }
     }
 
     // Select All
     public List<Proyect> proyectoFindAll() {
-        Iterable<Proyect> iterable = proyectoRepository.findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
+        return proyectRepository.findAllByDeletedFalse();
     }
 
     // Update
     public Proyect proyectoUpdate(Long id, Proyect updatedProyect) {
-        Proyect existingProyect = proyectoRepository.findById(id)
+        Proyect existingProyect = proyectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado"));
 
         existingProyect.setTitulo(updatedProyect.getTitulo());
         existingProyect.setDescripcion(updatedProyect.getDescripcion());
         existingProyect.setEstado(updatedProyect.getEstado());
 
-        return proyectoRepository.save(existingProyect);
+        return proyectRepository.save(existingProyect);
     }
 
     // Delete
     public void proyectoDeleteById(Long id) {
-        Proyect proyecto = proyectoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado"));
-
-        proyectoRepository.deleteById(id);
+        Proyect proyect = proyectoFindById(id);
+        proyect.setDeleted(true);
+        proyect.setDeleteAt(LocalDateTime.now());
+        proyectRepository.save(proyect);
     }
 }

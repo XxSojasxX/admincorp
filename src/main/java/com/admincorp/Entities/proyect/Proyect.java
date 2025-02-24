@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.admincorp.Login.User.Users;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class Proyect {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id", nullable = false)
+    @JsonIdentityReference(alwaysAsId = true)
     private Users leader;
 
     @Column(nullable = false)
@@ -39,8 +41,10 @@ public class Proyect {
     @Column(updatable = false)
     private LocalDateTime createAt;
 
-    @UpdateTimestamp
     private LocalDateTime deleteAt;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     // Métodos getter y setter para leader
     public Users getLeader() {
@@ -49,5 +53,21 @@ public class Proyect {
 
     public void setLeader(Users leader) {
         this.leader = leader;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public LocalDateTime getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(LocalDateTime deleteAt) {
+        this.deleteAt = deleteAt;
     }
 }
