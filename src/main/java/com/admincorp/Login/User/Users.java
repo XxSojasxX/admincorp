@@ -53,6 +53,7 @@ public class Users implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -60,7 +61,7 @@ public class Users implements UserDetails {
     @Column(nullable = false, length = 20)
     private Role role;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "leader", fetch = FetchType.LAZY)
     private List<Proyect> projects;
 

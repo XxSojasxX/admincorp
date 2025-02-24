@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.admincorp.Login.User.Users;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +23,6 @@ public class Proyect {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id", nullable = false)
-    @JsonManagedReference
     private Users leader;
 
     @Column(nullable = false)
