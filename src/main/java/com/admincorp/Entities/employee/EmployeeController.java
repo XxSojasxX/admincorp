@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     // Select
-    @GetMapping("/{id}/")
+    @GetMapping("/{id}")
     @Operation(summary = "Busca un Empleado por id")
     public Employee employeeFindById(@PathVariable Long id) {
         return employeeService.employeeFindById(id);
@@ -49,7 +49,7 @@ public class EmployeeController {
     }
 
     // Update
-    @PutMapping("/update/{id}/")
+    @PutMapping("/{id}")
     @Operation(summary = "Actualiza un Empleado")
     public ResponseEntity<Employee> employeeUpdate(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         Employee existingEmployee = employeeService.employeeFindById(id);
@@ -67,7 +67,7 @@ public class EmployeeController {
     }
 
     // Delete
-    @DeleteMapping("/{id}/")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Elimina un Empleado por id")
     public void employeeDelete(@PathVariable Long id) {
         employeeService.employeeDeleteById(id);
