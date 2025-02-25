@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class ActivityController {
 
     // Create
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER')")
     @Operation(summary = "Crea una Actividad")
     public Activity save(@RequestBody Activity entity) {
         return activityService.activitySave(entity);
@@ -36,6 +38,7 @@ public class ActivityController {
 
     // Select
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER, STAFF')") // Se agrega STAFF
     @Operation(summary = "Busca una Actividad por id")
     public Activity findById(@PathVariable("id") Long id) {
         return activityService.activityFindById(id);
@@ -43,6 +46,7 @@ public class ActivityController {
 
     // Select All
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER, STAFF')")
     @Operation(summary = "Busca todas las actividades")
     public List<Activity> findAll() {
         return activityService.activityFindAll();
@@ -50,6 +54,7 @@ public class ActivityController {
 
     // Update
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER, STAFF')")
     @Operation(summary = "Actualiza una Actividad")
     public ResponseEntity<Activity> update(@PathVariable("id") Long id, @RequestBody Activity updatedActivity) {
         Activity existingActivity = activityService.activityFindById(id);
@@ -82,6 +87,7 @@ public class ActivityController {
 
     // Delete
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER')")
     @Operation(summary = "Elimina una Actividad por id")
     public void delete(@PathVariable("id") Long id) {
         activityService.activityDeleteById(id);
