@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> findAllByDeletedFalse();
+    List<Activity> findByStaffId(Long staffId);
 }

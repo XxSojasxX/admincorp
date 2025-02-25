@@ -50,6 +50,11 @@ public class ActivityService {
                 .collect(Collectors.toList());
     }
 
+    // Select Activities and Projects by Staff ID
+    public List<Activity> findActivitiesByStaffId(Long staffId) {
+        return activityRepository.findByStaffId(staffId);
+    }
+
     // Update
     public Activity activityUpdate(Long id, Activity updatedActivity) {
         Activity existingActivity = activityRepository.findById(id)

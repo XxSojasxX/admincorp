@@ -38,7 +38,7 @@ public class ActivityController {
 
     // Select
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER, STAFF')") // Se agrega STAFF
+    @PreAuthorize("hasAnyAuthority('ADMIN, LEADER, STAFF')")
     @Operation(summary = "Busca una Actividad por id")
     public Activity findById(@PathVariable("id") Long id) {
         return activityService.activityFindById(id);
@@ -50,6 +50,19 @@ public class ActivityController {
     @Operation(summary = "Busca todas las actividades")
     public List<Activity> findAll() {
         return activityService.activityFindAll();
+    }
+
+    // Select Activities and Projects by Staff ID
+    @GetMapping("/staff/{staffId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
+    @Operation(summary = "Busca proyectos y actividades asignadas a un staff por id de staff")
+    public ResponseEntity<List<Activity>> findActivitiesByStaffId(@PathVariable("staffId") Long staffId) {
+        List<Activity> activities = activityService.findActivitiesByStaffId(staffId);
+        if (activities != null && !activities.isEmpty()) {
+            return ResponseEntity.ok(activities);
+        } else {
+            throw new EntityNotFoundException("No se encontraron actividades para el staff con id " + staffId);
+        }
     }
 
     // Update

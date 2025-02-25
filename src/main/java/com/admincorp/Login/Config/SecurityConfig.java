@@ -55,7 +55,7 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/auth/**").permitAll() // Permite el acceso sin autenticación a las rutas de auth
                                 .requestMatchers("/swagger-ui/*", "/v3/api-docs/*").permitAll() // Permite el acceso a Swagger
-                                .requestMatchers("/admincorp/users").hasAuthority(Role.ADMIN.name()) // Permite solo a ADMIN
+                                .requestMatchers("/admincorp/users/**").hasAuthority(Role.ADMIN.name()) // Permite solo a ADMIN
                                 .requestMatchers("/admincorp/admin/**").hasAuthority(Role.ADMIN.name()) // Permite solo a ADMIN
                                 .requestMatchers("/admincorp/proyecs/**").hasAnyAuthority(Role.LEADER.name (), Role.ADMIN.name()) // Permite a LIDER y ADMIN
                                 .requestMatchers("/admincorp/activities/**").hasAnyAuthority(Role.LEADER.name (), Role.ADMIN.name(), Role.STAFF.name()) // Permite a LIDER, ADMIN y STAFF
