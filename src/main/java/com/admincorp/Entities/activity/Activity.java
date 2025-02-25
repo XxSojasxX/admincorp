@@ -33,13 +33,13 @@ public class Activity {
     @JoinColumn(name = "staff_id", nullable = false)
     private Users staff;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String estado;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private LocalDateTime tiempoEntrega;
 
     @CreationTimestamp

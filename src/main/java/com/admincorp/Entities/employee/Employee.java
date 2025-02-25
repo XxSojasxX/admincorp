@@ -22,13 +22,13 @@ public class Employee {
     @Column(nullable = false)
     private Long cedula;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String nombreEmpleado;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String apellidoEmpleado;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String correoEmpleado;
 
     @CreationTimestamp

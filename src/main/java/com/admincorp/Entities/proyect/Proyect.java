@@ -25,10 +25,10 @@ public class Proyect {
     @JoinColumn(name = "leader_id", nullable = false)
     private Users leader;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Hacer opcional
     private String estado;
 
     @CreationTimestamp

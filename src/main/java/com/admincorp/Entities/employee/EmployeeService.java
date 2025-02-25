@@ -46,10 +46,18 @@ public class EmployeeService {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
 
-        existingEmployee.setCedula(updatedEmployee.getCedula());
-        existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
-        existingEmployee.setApellidoEmpleado(updatedEmployee.getApellidoEmpleado());
-        existingEmployee.setCorreoEmpleado(updatedEmployee.getCorreoEmpleado());
+        if (updatedEmployee.getCedula() != null) {
+            existingEmployee.setCedula(updatedEmployee.getCedula());
+        }
+        if (updatedEmployee.getNombreEmpleado() != null) {
+            existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
+        }
+        if (updatedEmployee.getApellidoEmpleado() != null) {
+            existingEmployee.setApellidoEmpleado(updatedEmployee.getApellidoEmpleado());
+        }
+        if (updatedEmployee.getCorreoEmpleado() != null) {
+            existingEmployee.setCorreoEmpleado(updatedEmployee.getCorreoEmpleado());
+        }
 
         return employeeRepository.save(existingEmployee);
     }

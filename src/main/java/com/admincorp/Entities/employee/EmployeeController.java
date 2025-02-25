@@ -54,10 +54,18 @@ public class EmployeeController {
     public ResponseEntity<Employee> employeeUpdate(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         Employee existingEmployee = employeeService.employeeFindById(id);
         if (existingEmployee != null) {
-            existingEmployee.setCedula(updatedEmployee.getCedula());
-            existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
-            existingEmployee.setApellidoEmpleado(updatedEmployee.getApellidoEmpleado());
-            existingEmployee.setCorreoEmpleado(updatedEmployee.getCorreoEmpleado());
+            if (updatedEmployee.getCedula() != null) {
+                existingEmployee.setCedula(updatedEmployee.getCedula());
+            }
+            if (updatedEmployee.getNombreEmpleado() != null) {
+                existingEmployee.setNombreEmpleado(updatedEmployee.getNombreEmpleado());
+            }
+            if (updatedEmployee.getApellidoEmpleado() != null) {
+                existingEmployee.setApellidoEmpleado(updatedEmployee.getApellidoEmpleado());
+            }
+            if (updatedEmployee.getCorreoEmpleado() != null) {
+                existingEmployee.setCorreoEmpleado(updatedEmployee.getCorreoEmpleado());
+            }
             // Actualizar otros campos según sea necesario
 
             return ResponseEntity.ok(employeeService.employeeSave(existingEmployee));
