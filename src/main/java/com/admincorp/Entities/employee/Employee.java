@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.admincorp.Entities.area.Area;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,10 @@ public class Employee {
     @Column(nullable = true) // Hacer opcional
     private String correoEmpleado;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "area_id", nullable = true)
+    private Area area;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createAt;
@@ -55,5 +60,14 @@ public class Employee {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    // Métodos getter y setter para area
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }
