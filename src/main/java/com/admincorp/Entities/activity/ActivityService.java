@@ -59,10 +59,11 @@ public class ActivityService {
     public List<Activity> findActivitiesByStaffId(Long staffId) {
         return activityRepository.findByStaffId(staffId);
     }
-        // Select Activities by Project ID
-        public List<Activity> findActivitiesByProjectId(Long proyectoId) {
-            return activityRepository.findByProyectoId(proyectoId);
-        }
+
+    // Select Activities by Project ID
+    public List<Activity> findActivitiesByProjectId(Long proyectoId) {
+        return activityRepository.findByProyectoId(proyectoId);
+    }
 
     // Update
     public Activity activityUpdate(Long id, Activity updatedActivity) {

@@ -35,7 +35,6 @@ public class ActivityController {
 
     // Create
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER')")
     @Operation(summary = "Crea una Actividad")
     public Activity save(@RequestBody Activity entity) {
         return activityService.activitySave(entity);
@@ -43,7 +42,6 @@ public class ActivityController {
 
     // Select
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
     @Operation(summary = "Busca una Actividad por id")
     public Activity findById(@PathVariable("id") Long id) {
         return activityService.activityFindById(id);
@@ -51,7 +49,6 @@ public class ActivityController {
 
     // Select All
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
     @Operation(summary = "Busca todas las actividades")
     public List<Activity> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -76,22 +73,20 @@ public class ActivityController {
     //     }
     // }
 
-        // Select Activities by Project ID
-        @GetMapping("/proyect/{proyectoId}")
-        @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
-        @Operation(summary = "Busca actividades asignadas a un proyecto por id de proyecto")
-        public ResponseEntity<List<Activity>> findActivitiesByProjectId(@PathVariable("proyectoId") Long proyectoId) {
-            List<Activity> activities = activityService.findActivitiesByProjectId(proyectoId);
-            if (activities != null && !activities.isEmpty()) {
-                return ResponseEntity.ok(activities);
-            } else {
-                throw new EntityNotFoundException("No se encontraron actividades para el proyecto con id " + proyectoId);
-            }
+    // Select Activities by Project ID
+    @GetMapping("/proyect/{proyectoId}")
+    @Operation(summary = "Busca actividades asignadas a un proyecto por id de proyecto")
+    public ResponseEntity<List<Activity>> findActivitiesByProjectId(@PathVariable("proyectoId") Long proyectoId) {
+        List<Activity> activities = activityService.findActivitiesByProjectId(proyectoId);
+        if (activities != null && !activities.isEmpty()) {
+            return ResponseEntity.ok(activities);
+        } else {
+             throw new EntityNotFoundException("No se encontraron actividades para el proyecto con id " + proyectoId);
         }
+    }
 
     // Update
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
     @Operation(summary = "Actualiza una Actividad")
     public ResponseEntity<Activity> update(@PathVariable("id") Long id, @RequestBody Activity updatedActivity) {
         Activity existingActivity = activityService.activityFindById(id);
@@ -124,7 +119,6 @@ public class ActivityController {
 
     // Delete
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER')")
     @Operation(summary = "Elimina una Actividad por id")
     public void delete(@PathVariable("id") Long id) {
         activityService.activityDeleteById(id);

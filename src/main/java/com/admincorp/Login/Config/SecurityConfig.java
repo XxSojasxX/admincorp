@@ -54,9 +54,10 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/*", "/v3/api-docs/*").permitAll() // Permite el acceso a Swagger
                         .requestMatchers("/admincorp/users/**").hasAuthority(Role.ADMIN.name()) // Permite solo a ADMIN
                         .requestMatchers("/admincorp/admin/**").hasAuthority(Role.ADMIN.name()) // Permite solo a ADMIN
-                        .requestMatchers("/admincorp/proyecs/**").hasAnyAuthority(Role.LEADER.name(), Role.ADMIN.name()) // Permite a LIDER y ADMIN
+                        .requestMatchers("/admincorp/proyects/**").hasAnyAuthority(Role.LEADER.name(), Role.ADMIN.name()) // Permite a LIDER y ADMIN
                         .requestMatchers("/admincorp/activities/**").hasAnyAuthority(Role.LEADER.name(), Role.ADMIN.name(), Role.STAFF.name()) // Permite a LIDER, ADMIN y STAFF
                         .requestMatchers("/admincorp/employees/**").hasAnyAuthority(Role.RH.name(), Role.ADMIN.name()) // Permite a RH y ADMIN
+                        .requestMatchers("//admincorp/areas/**").hasAnyAuthority(Role.RH.name(), Role.ADMIN.name())
                         .anyRequest().authenticated() // Requiere autenticación para el resto de las rutas
                 )
                 .sessionManagement(sessionManager -> sessionManager
