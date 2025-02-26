@@ -63,18 +63,31 @@ public class ActivityController {
         }
     }
 
-    // Select Activities and Projects by Staff ID
-    @GetMapping("/staff/{staffId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
-    @Operation(summary = "Busca proyectos y actividades asignadas a un staff por id de staff")
-    public ResponseEntity<List<Activity>> findActivitiesByStaffId(@PathVariable("staffId") Long staffId) {
-        List<Activity> activities = activityService.findActivitiesByStaffId(staffId);
-        if (activities != null && !activities.isEmpty()) {
-            return ResponseEntity.ok(activities);
-        } else {
-            throw new EntityNotFoundException("No se encontraron actividades para el staff con id " + staffId);
+    // // Select Activities and Projects by Staff ID
+    // @GetMapping("/proyect/{proyectId}")
+    // @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
+    // @Operation(summary = "Busca proyectos y actividades asignadas a un staff por id de staff")
+    // public ResponseEntity<List<Activity>> findActivitiesByStaffId(@PathVariable("staffId") Long staffId) {
+    //     List<Activity> activities = activityService.findActivitiesByStaffId(staffId);
+    //     if (activities != null && !activities.isEmpty()) {
+    //         return ResponseEntity.ok(activities);
+    //     } else {
+    //         throw new EntityNotFoundException("No se encontraron actividades para el staff con id " + staffId);
+    //     }
+    // }
+
+        // Select Activities by Project ID
+        @GetMapping("/proyect/{proyectoId}")
+        @PreAuthorize("hasAnyAuthority('ADMIN', 'LEADER', 'STAFF')")
+        @Operation(summary = "Busca actividades asignadas a un proyecto por id de proyecto")
+        public ResponseEntity<List<Activity>> findActivitiesByProjectId(@PathVariable("proyectoId") Long proyectoId) {
+            List<Activity> activities = activityService.findActivitiesByProjectId(proyectoId);
+            if (activities != null && !activities.isEmpty()) {
+                return ResponseEntity.ok(activities);
+            } else {
+                throw new EntityNotFoundException("No se encontraron actividades para el proyecto con id " + proyectoId);
+            }
         }
-    }
 
     // Update
     @PutMapping("/{id}")
